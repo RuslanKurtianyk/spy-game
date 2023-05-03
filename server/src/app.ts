@@ -1,5 +1,17 @@
 import express, { Express, json, urlencoded } from 'express';
 const cors = require('cors');
+require('dotenv').config();
+
+import { myDataSource } from './app-data-source';
+
+myDataSource
+    .initialize()
+    .then(() => {
+        console.log("Data Source has been initialized!")
+    })
+    .catch((err) => {
+        console.error("Error during Data Source initialization:", err)
+    })
 
 // Routes
 import { index } from './routes/index';
