@@ -25,5 +25,6 @@ app.set('port', process.env.PORT || 8081);
 app.use(cors());
 app.use(json());
 app.use(urlencoded({ extended: true }));
+console.log('index');
 
 app.use('', index);

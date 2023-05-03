@@ -3,11 +3,14 @@ import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 @Entity()
 export class Game {
     @PrimaryGeneratedColumn()
-    id!: number;
+    id!: string;
 
     @Column()
     name!: string;
 
-    @Column()
+    @Column({
+        type: 'json',
+        nullable: true,
+    })
     players!: Record<string, any>[];
 }
