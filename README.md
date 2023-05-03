@@ -13,4 +13,4 @@ npm i -g @nestjs/cli
 
 3. Install all depepndencies
 4. Run `npm run start` from root folder to run UI and backend
-5. Run start commands from `server` or `client` folders to run UI and backedn separately
+5. Run start commands from `server` or `client` folders to run UI and backend separately
