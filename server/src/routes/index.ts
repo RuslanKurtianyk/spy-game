@@ -5,6 +5,8 @@ export const index = Router();
 
 index.get('/hello', controllers.hello);
 // Games
-index.get('/games', controllers.getGameList);
-index.get('/games/:id', controllers.getOneGame);
-index.post('/games', controllers.createGame);
+index.get('/games', controllers.GameController.getList);
+index.get('/games/:id', controllers.GameController.getOne);
+index.post('/games', controllers.GameController.create);
+index.put('/games/:id', controllers.GameController.update);
+index.delete('/games/:id', controllers.GameController.delete);

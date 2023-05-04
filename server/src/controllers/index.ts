@@ -4,4 +4,4 @@ export const hello = async (req: Request, res: Response): Promise<void> => {
   res.send({data: 'Hello from server'})
 };
 
-export * from './game';
+export * from './game.controller';

@@ -4,7 +4,6 @@ import { Game } from '../entity';
 export const getGamesList = async (): Promise<Array<Game>> => {
   const gameRepository = myDataSource.getRepository(Game);
   const res = await gameRepository.find();
-  console.log(res);
   return res;
 };
 
@@ -18,4 +17,16 @@ export const createNewGame = async (game: Partial<Game>) => {
   const entity = gameRepository.create(game);
 
   return await gameRepository.save(entity);
+}
+
+export const updateGame = async (game: Partial<Game>) => {
+  const gameRepository = myDataSource.getRepository(Game);
+
+  return await gameRepository.save({...game});
+}
+
+export const deleteGameById = async (id: string) => {
+  const gameRepository = myDataSource.getRepository(Game);
+
+  return await gameRepository.delete(id);
 }
