@@ -3,10 +3,10 @@ import * as controllers from '../controllers/index';
 
 export const routes = Router();
 
-routes.get('/hello', controllers.hello);
+routes.get('/api/hello', controllers.hello);
 // Games
-routes.get('/games', controllers.GameController.getList);
-routes.get('/games/:id', controllers.GameController.getOne);
-routes.post('/games', controllers.GameController.create);
-routes.put('/games/:id', controllers.GameController.update);
-routes.delete('/games/:id', controllers.GameController.delete);
+routes.get('/api/games', controllers.GameController.getList);
+routes.get('/api/games/:id', controllers.GameController.getOne);
+routes.post('/api/games', controllers.GameController.create);
+routes.put('/api/games/:id', controllers.GameController.update);
+routes.delete('/api/games/:id', controllers.GameController.delete);
