@@ -1,0 +1,198 @@
+
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Spy Game API",
+    "description": "API documentation for Spy game server",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "host": "localhost:8081",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "Games",
+      "description": "API for games"
+    }
+  ],
+  "schemes": ["http"],
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+  "paths": {
+    "/games": {
+      "get": {
+        "tags": ["Games"],
+        "summary": "Get all games in system",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Games"
+            }
+          },
+          "500": {
+            "description": "Something went wrong"
+          }
+        }
+      },
+      "post": {
+        "tags": ["Games"],
+        "summary": "Create new game",
+        "parameters": [
+          {
+            "name": "game",
+            "in": "body",
+            "description": "Game that we want to create",
+            "schema": {
+              "$ref": "#/definitions/GameDto"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Games"
+            }
+          },
+          "500": {
+            "description": "Something went wrong"
+          }
+        }
+      }
+    },
+    "/games/{id}": {
+      "get": {
+        "tags": ["Games"],
+        "summary": "Get game by id in system",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID of game that we want to find",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Game"
+            }
+          },
+          "500": {
+            "description": "Something went wrong"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Games"],
+        "summary": "Delete game by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID of game that we want to delete",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Game deleted"
+          },
+          "500": {
+            "description": "Something went wrong"
+          }
+        }
+      },
+      "put": {
+        "tags": ["Games"],
+        "summary": "Update game by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID of game that we want to update",
+            "type": "string"
+          },
+          {
+            "name": "game",
+            "in": "body",
+            "description": "Game with new values of properties",
+            "schema": {
+              "$ref": "#/definitions/GameDto"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Game updated"
+          },
+          "500": {
+            "description": "Something went wrong"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Game": {
+      "required": ["name"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "uniqueItems": true
+        },
+        "name": {
+          "type": "string"
+        },
+        "players": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "role": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "GameDto": {
+      "required": ["name"],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "players": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "role": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "Games": {
+      "type": "array",
+      "$ref": "#/definitions/Game"
+    }
+  }
+}

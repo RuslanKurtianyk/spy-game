@@ -1,12 +1,12 @@
 import { Router } from 'express';
 import * as controllers from '../controllers/index';
 
-export const index = Router();
+export const routes = Router();
 
-index.get('/hello', controllers.hello);
+routes.get('/hello', controllers.hello);
 // Games
-index.get('/games', controllers.GameController.getList);
-index.get('/games/:id', controllers.GameController.getOne);
-index.post('/games', controllers.GameController.create);
-index.put('/games/:id', controllers.GameController.update);
-index.delete('/games/:id', controllers.GameController.delete);
+routes.get('/games', controllers.GameController.getList);
+routes.get('/games/:id', controllers.GameController.getOne);
+routes.post('/games', controllers.GameController.create);
+routes.put('/games/:id', controllers.GameController.update);
+routes.delete('/games/:id', controllers.GameController.delete);

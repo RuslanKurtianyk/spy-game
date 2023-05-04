@@ -14,7 +14,7 @@ myDataSource
     })
 
 // Routes
-import { index } from './routes/index';
+import { routes } from './routes/index';
 
 // Create Express server
 export const app: Express = express();
@@ -25,6 +25,14 @@ app.set('port', process.env.PORT || 8081);
 app.use(cors());
 app.use(json());
 app.use(urlencoded({ extended: true }));
-console.log('index');
 
-app.use('', index);
+const swaggerUi = require('swagger-ui-express'),
+swaggerDocument = require('../swagger.json');
+
+app.use(
+    '/api-docs',
+    swaggerUi.serve, 
+    swaggerUi.setup(swaggerDocument)
+  );
+
+app.use('', routes);
