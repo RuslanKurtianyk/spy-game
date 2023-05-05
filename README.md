@@ -9,7 +9,7 @@ How to start
 1. Install Nest CLI
    npm i -g @nestjs/cli
 
-2. Create .env file and fill it using .env.example as template. Ask Ruslan for creds to DB if needed.
+2. Create .env file in server dir and fill it using .env.example as template. Ask Ruslan for creds to DB if needed.
 
 3. Install all depepndencies
 4. Run `npm run start` from root folder to run backend
