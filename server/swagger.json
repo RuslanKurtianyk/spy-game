@@ -88,6 +88,9 @@
               "$ref": "#/definitions/Game"
             }
           },
+          "404": {
+            "description": "Game not found"
+          },
           "500": {
             "description": "Something went wrong"
           }
