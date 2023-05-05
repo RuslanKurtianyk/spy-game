@@ -11,7 +11,7 @@ export const getRandomLocation = async (): Promise<Location | null> => {
   const randomLocation = await gameRepository
     .createQueryBuilder('locations')
     .select()
-    .orderBy('RANDOM()')
+    .orderBy('RAND()')
     .getOne();
 
   return randomLocation;
