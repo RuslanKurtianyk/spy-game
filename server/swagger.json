@@ -11,11 +11,15 @@
     }
   },
   "host": "localhost:8081",
-  "basePath": "/",
+  "basePath": "/api/",
   "tags": [
     {
       "name": "Games",
       "description": "API for games"
+    },
+    {
+      "name": "Locations",
+      "description": "API for locations"
     }
   ],
   "schemes": ["http"],
@@ -131,8 +135,45 @@
           }
         ],
         "responses": {
-          "204": {
+          "200": {
             "description": "Game updated"
+          },
+          "500": {
+            "description": "Something went wrong"
+          }
+        }
+      }
+    },
+    "/locations": {
+      "get": {
+        "tags": ["Locations"],
+        "summary": "Get list of all locations",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Locations"
+            }
+          },
+          "500": {
+            "description": "Something went wrong"
+          }
+        }
+      }
+    },
+    "/locations/random": {
+      "get": {
+        "tags": ["Locations"],
+        "summary": "Get random location",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Location"
+            }
+          },
+          "404": {
+            "description": "Location not found"
           },
           "500": {
             "description": "Something went wrong"
@@ -201,6 +242,22 @@
     "Games": {
       "type": "array",
       "$ref": "#/definitions/Game"
+    },
+    "Location": {
+      "required": ["name"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "uniqueItems": true
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "Locations": {
+      "type": "array",
+      "$ref": "#/definitions/Location"
     }
   }
 }

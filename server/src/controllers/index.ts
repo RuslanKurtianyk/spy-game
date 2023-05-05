@@ -5,3 +5,5 @@ export const hello = async (req: Request, res: Response): Promise<void> => {
 };
 
 export * from './game.controller';
+export * from './location.controller';
+

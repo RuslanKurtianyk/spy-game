@@ -1,5 +1,6 @@
 import { DataSource } from 'typeorm';
 import { Game } from './entity/game.entity';
+import { Location } from './entity/location.entity';
 require('dotenv').config();
 
 export const myDataSource = new DataSource({
@@ -9,8 +10,8 @@ export const myDataSource = new DataSource({
     username: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
-    entities: [Game],
-    migrations: ['src/migrations/*.{ts,js}'],
+    entities: [Game, Location],
+    migrations: ['src/migrations/*.{ts}'],
     logging: true,
     synchronize: true,
 });
