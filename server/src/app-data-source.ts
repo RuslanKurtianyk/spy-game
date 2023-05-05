@@ -10,7 +10,7 @@ export const myDataSource = new DataSource({
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
     entities: [Game],
-    migrations: ['src/migrations/*.{ts}'],
+    migrations: ['src/migrations/*.{ts,js}'],
     logging: true,
     synchronize: true,
 });

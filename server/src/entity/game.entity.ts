@@ -1,6 +1,7 @@
+import { GameStatus } from '../types';
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity()
+@Entity({name: 'games'})
 export class Game {
     @PrimaryGeneratedColumn()
     id!: string;
@@ -13,4 +14,10 @@ export class Game {
         nullable: true,
     })
     players!: Record<string, any>[];
+
+    @Column({
+        type: 'varchar',
+        default: GameStatus.New,
+    })
+    status: GameStatus = GameStatus.New;
 }

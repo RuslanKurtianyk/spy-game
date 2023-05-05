@@ -165,6 +165,10 @@
               }
             }
           }
+        },
+        "status": {
+          "type": "string",
+          "enum": ["New", "InProgress", "Finished"]
         }
       }
     },
@@ -187,6 +191,10 @@
               }
             }
           }
+        },
+        "status": {
+          "type": "string",
+          "enum": ["New", "InProgress", "Finished"]
         }
       }
     },
