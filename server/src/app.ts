@@ -21,8 +21,18 @@ export const app: Express = express();
 
 // Express configuration
 app.set('port', process.env.PORT || 8081);
-
-app.use(cors());
+const corsOptions = {
+    origin: '*',
+    methods: [
+      'GET',
+      'POST',
+    ],
+    allowedHeaders: [
+      'Content-Type',
+    ],
+  };
+  
+app.use(cors(corsOptions));
 app.use(json());
 app.use(urlencoded({ extended: true }));
 
