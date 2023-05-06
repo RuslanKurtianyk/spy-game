@@ -1,3 +1,4 @@
+import { Player } from 'src/types/model/player';
 import { GameStatus } from '../types';
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
@@ -15,7 +16,7 @@ export class Game {
     type: 'json',
     nullable: true,
   })
-  players!: Record<string, any>[];
+  players!: Player[];
 
   @Column({
     type: 'varchar',
