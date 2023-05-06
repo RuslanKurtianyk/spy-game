@@ -12,7 +12,8 @@
     "watch:node": "nodemon dist/server.js",
     "serve": "node dist/server.js",
     "typeorm": "typeorm",
-    "typeorm:migration:run": "npx typeorm-ts-node-commonjs migration:run -d ./src/app-data-source.ts"
+    "migration:run": "npx typeorm-ts-node-commonjs migration:run -d ./src/app-data-source.ts",
+    "migration:create": "npm run typeorm migration:create"
   },
   "author": "",
   "license": "ISC",

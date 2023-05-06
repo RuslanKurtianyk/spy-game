@@ -11,7 +11,6 @@ export const GameController = {
     const status = randomLocation ? 200 : 404;
     const result = randomLocation ? randomLocation : 'Game not found';
     response.status(status).send(result);
-
   },
   create: async (request: Request<Partial<Game>>, response: Response) => {
     const result = await createNewGame(request.body);
