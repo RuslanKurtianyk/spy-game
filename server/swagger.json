@@ -147,6 +147,43 @@
         }
       }
     },
+    "/games/{gameId}/join": {
+      "put": {
+        "tags": ["Games"],
+        "summary": "Join to the game",
+        "parameters": [
+          {
+            "name": "gameId",
+            "in": "path",
+            "required": true,
+            "description": "ID of game that we want to join",
+            "type": "string"
+          },
+          {
+            "name": "playerName",
+            "in": "body",
+            "description": "Player's name ",
+            "schema": {
+              "$ref": "#/definitions/GameDto"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Game joined"
+          },
+          "400": {
+            "description": "Wrong input parameters"
+          },
+          "404": {
+            "description": "Game not found"
+          },
+          "500": {
+            "description": "Something went wrong"
+          }
+        }
+      }
+    },
     "/locations": {
       "get": {
         "tags": ["Locations"],

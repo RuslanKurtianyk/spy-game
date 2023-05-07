@@ -29,4 +29,12 @@ export class Game {
     nullable: true,
   })
   admin?: string | null;
+
+  @Column({
+    type: 'integer',
+    name: 'players_max_count',
+    default: 10,
+    nullable: true,
+  })
+  playersMaxCount: number = 10;
 }
