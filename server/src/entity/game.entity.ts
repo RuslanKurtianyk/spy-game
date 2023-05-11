@@ -31,6 +31,12 @@ export class Game {
   admin?: string | null;
 
   @Column({
+    type: 'varchar',
+    nullable: true,
+  })
+  location?: string | null;
+
+  @Column({
     type: 'integer',
     name: 'players_max_count',
     default: 10,
