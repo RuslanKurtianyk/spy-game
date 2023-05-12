@@ -3,5 +3,5 @@ export interface JoinGameParams {
 }
 
 export interface JoinGameBody {
-  playerName: string;
+  name: string;
 }

@@ -1,1 +1,1 @@
-export * from './join-game-error';
+export * from './game-error';

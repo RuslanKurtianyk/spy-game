@@ -1,6 +1,8 @@
-import { GameStatus, JoinGameError, JoinGameErrorType, Player } from '../types';
+import { GameStatus, GameError, GameErrorType, Player, PlayerRole } from '../types';
 import { myDataSource } from '../app-data-source';
 import { Game } from '../entity';
+import { getRandomInteger } from '../shared';
+import { getRandomLocation } from './location.service';
 
 export const getGamesList = async (): Promise<Array<Game>> => {
   const gameRepository = myDataSource.getRepository(Game);
@@ -36,18 +38,40 @@ export const joinGame = async (game: Game, player: Player): Promise<Game> => {
   const gameRepository = myDataSource.getRepository(Game);
 
   if (game.status !== GameStatus.New) {
-    throw new JoinGameError(JoinGameErrorType.GameALreadyStarted, `You can not join the game that already started`);
+    throw new GameError(GameErrorType.GameAlreadyStarted, `You can not join the game that already started`);
   }
 
   if (Array.isArray(game?.players) && game?.playersMaxCount <= game?.players?.length) {
-    throw new JoinGameError(JoinGameErrorType.MaxPlayersCountReached, `Max players's count reached`);
+    throw new GameError(GameErrorType.MaxPlayersCountReached, `Max players's count reached`);
   }
 
   if (Array.isArray(game?.players) && game?.players?.some(p => p.name === player.name)) {
-    throw new JoinGameError(JoinGameErrorType.PlayerAlreadyExists, `Player with name: ${player.name} already joined the game`);
+    throw new GameError(GameErrorType.PlayerAlreadyExists, `Player with name: ${player.name} already joined the game`);
   }
-
+console.log('player');
+console.log(player);
   Array.isArray(game.players) ? game.players.push(player) : game.players = [player];
+
+  return await gameRepository.save(game);
+};
+
+export const startGame = async (game: Game): Promise<Game> => {
+  const gameRepository = myDataSource.getRepository(Game);
+
+  const { players, playersMaxCount } = game;
+  const getSpyPlayerIndex = getRandomInteger(0, playersMaxCount);
+
+  const updatedPlayers = players.map((player, index) => {
+    player.role =
+      getSpyPlayerIndex === index ? PlayerRole.Spy : PlayerRole.Resident;
+    return player;
+  });
+
+  game.status = GameStatus.InProgress;
+  game.players = updatedPlayers;
+
+  const location = await getRandomLocation();
+  game.location = location ? location.name : null;
 
   return await gameRepository.save(game);
 };

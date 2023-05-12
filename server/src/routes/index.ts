@@ -10,6 +10,7 @@ routes.get('/api/games/:id', controllers.GameController.getOne);
 routes.post('/api/games', controllers.GameController.create);
 routes.put('/api/games/:id', controllers.GameController.update);
 routes.put('/api/games/:gameId/join', controllers.GameController.join);
+routes.put('/api/games/:gameId/start', controllers.GameController.start);
 routes.delete('/api/games/:id', controllers.GameController.delete);
 
 // Locations

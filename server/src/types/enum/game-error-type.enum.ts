@@ -1,5 +1,5 @@
-export enum JoinGameErrorType {
+export enum GameErrorType {
   PlayerAlreadyExists = 'PlayerAlreadyExists',
   MaxPlayersCountReached = 'MaxPlayersCountReached',
-  GameALreadyStarted = 'GameAlreadyStarted',
+  GameAlreadyStarted = 'GameAlreadyStarted',
 }

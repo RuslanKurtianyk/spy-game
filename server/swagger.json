@@ -164,13 +164,42 @@
             "in": "body",
             "description": "Player's name ",
             "schema": {
-              "$ref": "#/definitions/GameDto"
+              "$ref": "#/definitions/Player"
             }
           }
         ],
         "responses": {
           "200": {
             "description": "Game joined"
+          },
+          "400": {
+            "description": "Wrong input parameters"
+          },
+          "404": {
+            "description": "Game not found"
+          },
+          "500": {
+            "description": "Something went wrong"
+          }
+        }
+      }
+    },
+    "/games/{gameId}/start": {
+      "put": {
+        "tags": ["Games"],
+        "summary": "Start to the game",
+        "parameters": [
+          {
+            "name": "gameId",
+            "in": "path",
+            "required": true,
+            "description": "ID of game that we want to start",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Game started"
           },
           "400": {
             "description": "Wrong input parameters"
@@ -298,6 +327,14 @@
     "Locations": {
       "type": "array",
       "$ref": "#/definitions/Location"
+    },
+    "Player": {
+      "required": ["name"],
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      }
     }
   }
 }

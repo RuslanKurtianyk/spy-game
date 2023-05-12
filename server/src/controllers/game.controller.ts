@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
-import { createNewGame, deleteGameById, getGamesList, getGameById, updateGame, joinGame } from '../services/game.service';
-import { Game } from 'src/entity';
-import { JoinGameError, JoinGameBody, JoinGameParams, WithId } from '../types';
+import { createNewGame, deleteGameById, getGamesList, getGameById, updateGame, joinGame, startGame } from '../services/game.service';
+import { Game } from '../entity';
+import { GameError, JoinGameBody, JoinGameParams, WithId, GameStatus } from '../types';
 
 export const GameController = {
   getList: async (request: Request, response: Response): Promise<void> => {
@@ -25,7 +25,7 @@ export const GameController = {
   },
   join: async (request: Request<JoinGameParams, string, JoinGameBody>, response: Response): Promise<void> => {
     const { gameId } = request.params;
-    const { playerName } = request.body;
+    const { name } = request.body;
     const game = await getGameById(gameId);
 
     if (!game) {
@@ -34,15 +34,35 @@ export const GameController = {
     }
 
     try {
-      await joinGame(game, {name: playerName});
+      await joinGame(game, { name });
       response.status(200).send(`You joined the game`);
     } catch (error) {
-      if (error instanceof JoinGameError) {
+      if (error instanceof GameError) {
         response.status(400).send(error.message);
         return;
       }
       response.status(500).send('Something went wrong');
     }
-
   },
+  start: async (request: Request<any, string, any>, response: Response): Promise<void> => {
+    const { gameId } = request.params;
+    const game = await getGameById(gameId);
+
+    if (!game) {
+      response.status(404).send(`No game found with id: ${gameId}`);
+      return;
+    }
+
+    if (game.status === GameStatus.InProgress) {
+      response.status(400).send('Game already started');
+    }
+
+    try {
+      await startGame(game);
+      response.status(200).send(`You started the game`);
+    } catch (error) {
+      console.log(error);
+      response.status(500).send('Something went wrong');
+    }
+  }
 };
