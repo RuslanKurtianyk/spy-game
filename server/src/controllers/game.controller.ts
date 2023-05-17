@@ -1,12 +1,9 @@
 import { Request, Response } from 'express';
-import { createNewGame, deleteGameById, getGamesList, getGameById, updateGame, joinGame, startGame } from '../services/game.service';
+import { createNewGame, getGameById, joinGame, startGame } from '../services/game.service';
 import { Game } from '../entity';
 import { GameError, JoinGameBody, JoinGameParams, WithId, GameStatus } from '../types';
 
 export const GameController = {
-  getList: async (request: Request, response: Response): Promise<void> => {
-    response.send(await getGamesList());
-  },
   getOne: async (request: Request<WithId>, response: Response): Promise<void> => {
     const randomLocation = await getGameById(request.params.id);
     const status = randomLocation ? 200 : 404;
@@ -16,12 +13,6 @@ export const GameController = {
   create: async (request: Request<Partial<Game>>, response: Response) => {
     const result = await createNewGame(request.body);
     response.send(result);
-  },
-  update: async (request: Request, response: Response): Promise<void> => {
-    response.send(await updateGame(request.body));
-  },
-  delete: async (request: Request<WithId>, response: Response): Promise<void> => {
-    response.send(await deleteGameById(request.params.id));
   },
   join: async (request: Request<JoinGameParams, string, JoinGameBody>, response: Response): Promise<void> => {
     const { gameId } = request.params;

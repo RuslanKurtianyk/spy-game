@@ -4,12 +4,6 @@ import { Game } from '../entity';
 import { getRandomInteger } from '../shared';
 import { getRandomLocation } from './location.service';
 
-export const getGamesList = async (): Promise<Array<Game>> => {
-  const gameRepository = myDataSource.getRepository(Game);
-  const res = await gameRepository.find();
-  return res;
-};
-
 export const getGameById = async (id: string): Promise<Game | null> => {
   const gameRepository = myDataSource.getRepository(Game);
   return gameRepository.findOne({ where: { id }});
@@ -20,18 +14,6 @@ export const createNewGame = async (game: Partial<Game>) => {
   const entity = gameRepository.create(game);
 
   return await gameRepository.save(entity);
-}
-
-export const updateGame = async (game: Partial<Game>) => {
-  const gameRepository = myDataSource.getRepository(Game);
-
-  return await gameRepository.save({...game});
-}
-
-export const deleteGameById = async (id: string) => {
-  const gameRepository = myDataSource.getRepository(Game);
-
-  return await gameRepository.delete(id);
 }
 
 export const joinGame = async (game: Game, player: Player): Promise<Game> => {
