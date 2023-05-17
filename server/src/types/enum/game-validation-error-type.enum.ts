@@ -1,4 +1,4 @@
-export enum GameErrorType {
+export enum GameValidationErrorType {
   PlayerAlreadyExists = 'PlayerAlreadyExists',
   MaxPlayersCountReached = 'MaxPlayersCountReached',
   GameAlreadyStarted = 'GameAlreadyStarted',

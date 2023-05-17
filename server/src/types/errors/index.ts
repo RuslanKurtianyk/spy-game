@@ -1,1 +1,1 @@
-export * from './game-error';
+export * from './game-validation-error';
