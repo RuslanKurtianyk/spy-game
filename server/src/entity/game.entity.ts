@@ -43,4 +43,12 @@ export class Game {
     nullable: true,
   })
   playersMaxCount: number = 10;
+
+  @Column({
+    type: 'integer',
+    name: 'players_min_count',
+    default: 3,
+    nullable: true,
+  })
+  playersMinCount: number = 3;
 }

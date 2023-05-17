@@ -48,8 +48,7 @@ export const joinGame = async (game: Game, player: Player): Promise<Game> => {
   if (Array.isArray(game?.players) && game?.players?.some(p => p.name === player.name)) {
     throw new GameError(GameErrorType.PlayerAlreadyExists, `Player with name: ${player.name} already joined the game`);
   }
-console.log('player');
-console.log(player);
+
   Array.isArray(game.players) ? game.players.push(player) : game.players = [player];
 
   return await gameRepository.save(game);
@@ -58,7 +57,11 @@ console.log(player);
 export const startGame = async (game: Game): Promise<Game> => {
   const gameRepository = myDataSource.getRepository(Game);
 
-  const { players, playersMaxCount } = game;
+  const { players, playersMaxCount, playersMinCount } = game;
+
+  if (Array.isArray(game?.players) && playersMinCount >= game?.players?.length) {
+    throw new GameError(GameErrorType.NotEnoughPlayers, `There is not enough players to start the game`);
+  }
   const getSpyPlayerIndex = getRandomInteger(0, playersMaxCount);
 
   const updatedPlayers = players.map((player, index) => {

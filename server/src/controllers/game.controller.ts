@@ -61,7 +61,10 @@ export const GameController = {
       await startGame(game);
       response.status(200).send(`You started the game`);
     } catch (error) {
-      console.log(error);
+      if (error instanceof GameError) {
+        response.status(400).send(error.message);
+        return;
+      }
       response.status(500).send('Something went wrong');
     }
   }
