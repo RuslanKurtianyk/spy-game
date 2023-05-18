@@ -1,12 +1,24 @@
-import { GameStatus, GameError, GameErrorType, Player, PlayerRole } from '../types';
+import { GameStatus, GameValidationErrorType, Player, PlayerRole } from '../types';
+import { GameValidationError, GameNotFoundError, NameQueryParamMissingError } from '../types/errors';
 import { myDataSource } from '../app-data-source';
 import { Game } from '../entity';
 import { getRandomInteger } from '../shared';
 import { getRandomLocation } from './location.service';
+import { getGameResponse } from '../utils/get-game-response';
 
-export const getGameById = async (id: string): Promise<Game | null> => {
+export const getGameById = async (id: string, userName?: string): Promise<Game> => {
   const gameRepository = myDataSource.getRepository(Game);
-  return gameRepository.findOne({ where: { id }});
+  const game = await gameRepository.findOne({ where: { id }})
+
+  if (!game) {
+    throw new GameNotFoundError();
+  }
+
+  if (game.status === GameStatus.InProgress && !userName) {
+    throw new NameQueryParamMissingError();
+  }
+
+  return getGameResponse(game, userName);
 }
 
 export const createNewGame = async (game: Partial<Game>) => {
@@ -20,15 +32,15 @@ export const joinGame = async (game: Game, player: Player): Promise<Game> => {
   const gameRepository = myDataSource.getRepository(Game);
 
   if (game.status !== GameStatus.New) {
-    throw new GameError(GameErrorType.GameAlreadyStarted, `You can not join the game that already started`);
+    throw new GameValidationError(GameValidationErrorType.GameAlreadyStarted, `You can not join the game that already started`);
   }
 
   if (Array.isArray(game?.players) && game?.playersMaxCount <= game?.players?.length) {
-    throw new GameError(GameErrorType.MaxPlayersCountReached, `Max players's count reached`);
+    throw new GameValidationError(GameValidationErrorType.MaxPlayersCountReached, `Max players's count reached`);
   }
 
   if (Array.isArray(game?.players) && game?.players?.some(p => p.name === player.name)) {
-    throw new GameError(GameErrorType.PlayerAlreadyExists, `Player with name: ${player.name} already joined the game`);
+    throw new GameValidationError(GameValidationErrorType.PlayerAlreadyExists, `Player with name: ${player.name} already joined the game`);
   }
 
   Array.isArray(game.players) ? game.players.push(player) : game.players = [player];
@@ -42,7 +54,7 @@ export const startGame = async (game: Game): Promise<Game> => {
   const { players, playersMaxCount, playersMinCount } = game;
 
   if (Array.isArray(game?.players) && playersMinCount >= game?.players?.length) {
-    throw new GameError(GameErrorType.NotEnoughPlayers, `There is not enough players to start the game`);
+    throw new GameValidationError(GameValidationErrorType.NotEnoughPlayers, `There is not enough players to start the game`);
   }
   const getSpyPlayerIndex = getRandomInteger(0, playersMaxCount);
 
