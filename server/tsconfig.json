@@ -15,5 +15,6 @@
     "baseUrl": "./",
     "incremental": true,
     "esModuleInterop": true,
+    "typeRoots": ["../node_modules/@types", "./src/typings"]
   }
 }
