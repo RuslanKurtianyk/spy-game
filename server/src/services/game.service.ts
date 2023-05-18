@@ -72,3 +72,9 @@ export const startGame = async (game: Game): Promise<Game> => {
 
   return await gameRepository.save(game);
 };
+
+export const finishGame = async (game: Game): Promise<Game> => {
+  const gameRepository = myDataSource.getRepository(Game);
+  game.status = GameStatus.Finished;
+  return await gameRepository.save(game);
+}

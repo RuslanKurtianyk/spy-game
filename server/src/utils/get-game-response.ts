@@ -11,7 +11,8 @@ export const getGameResponse = (game: Game, userName: string = ''): GameDto => {
   }
 
   gameDto.currentUserRole = gameDto.status === GameStatus.InProgress ? userRole : undefined;
-  if (gameDto.players && Array.isArray(gameDto.players)) {
+
+  if (gameDto.status !== GameStatus.Finished && gameDto.players && Array.isArray(gameDto.players)) {
     gameDto.players.forEach(player => player.role = undefined);
   }
 
