@@ -13,4 +13,3 @@ routes.put('/api/games/:gameId/finish', controllers.GameController.finish);
 
 // Locations
 routes.get('/api/locations', controllers.LocationController.getList);
-routes.get('/api/locations/random', controllers.LocationController.getRandomOne);
