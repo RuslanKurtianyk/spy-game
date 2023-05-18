@@ -64,13 +64,20 @@
             "required": true,
             "description": "ID of game that we want to find",
             "type": "string"
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "required": false,
+            "description": "User name",
+            "type": "string"
           }
         ],
         "responses": {
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/Game"
+              "$ref": "#/definitions/GameResponseDto"
             }
           },
           "404": {
@@ -164,26 +171,6 @@
           }
         }
       }
-    },
-    "/locations/random": {
-      "get": {
-        "tags": ["Locations"],
-        "summary": "Get random location",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/Location"
-            }
-          },
-          "404": {
-            "description": "Location not found"
-          },
-          "500": {
-            "description": "Something went wrong"
-          }
-        }
-      }
     }
   },
   "definitions": {
@@ -221,6 +208,44 @@
       "required": ["name"],
       "properties": {
         "name": {
+          "type": "string"
+        },
+        "players": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "role": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "status": {
+          "type": "string",
+          "enum": ["New", "InProgress", "Finished"]
+        }
+      }
+    },
+    "GameResponseDto": {
+      "required": ["name"],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "admin": {
+          "type": "string"
+        },
+        "location": {
+          "type": "string"
+        },
+        "currentUserRole": {
           "type": "string"
         },
         "players": {
