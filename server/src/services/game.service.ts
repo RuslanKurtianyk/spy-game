@@ -1,13 +1,13 @@
 import { GameStatus, GameValidationErrorType, Player, PlayerRole } from '../types';
 import { GameValidationError, GameNotFoundError, NameQueryParamMissingError } from '../types/errors';
-import { myDataSource } from '../app-data-source';
+import { appDataSource } from '../app-data-source';
 import { Game } from '../entity';
 import { getRandomInteger } from '../shared';
 import { getRandomLocation } from './location.service';
 import { getGameResponse } from '../utils/get-game-response';
 
 export const getGameById = async (id: string, userName?: string): Promise<Game> => {
-  const gameRepository = myDataSource.getRepository(Game);
+  const gameRepository = appDataSource.getRepository(Game);
   const game = await gameRepository.findOne({ where: { id }})
 
   if (!game) {
@@ -22,14 +22,14 @@ export const getGameById = async (id: string, userName?: string): Promise<Game> 
 }
 
 export const createNewGame = async (game: Partial<Game>) => {
-  const gameRepository = myDataSource.getRepository(Game);
+  const gameRepository = appDataSource.getRepository(Game);
   const entity = gameRepository.create(game);
 
   return await gameRepository.save(entity);
 }
 
 export const joinGame = async (game: Game, player: Player): Promise<Game> => {
-  const gameRepository = myDataSource.getRepository(Game);
+  const gameRepository = appDataSource.getRepository(Game);
 
   if (game.status !== GameStatus.New) {
     throw new GameValidationError(GameValidationErrorType.GameAlreadyStarted, `You can not join the game that already started`);
@@ -49,7 +49,7 @@ export const joinGame = async (game: Game, player: Player): Promise<Game> => {
 };
 
 export const startGame = async (game: Game): Promise<Game> => {
-  const gameRepository = myDataSource.getRepository(Game);
+  const gameRepository = appDataSource.getRepository(Game);
 
   const { players, playersMaxCount, playersMinCount } = game;
 
@@ -74,7 +74,7 @@ export const startGame = async (game: Game): Promise<Game> => {
 };
 
 export const finishGame = async (game: Game): Promise<Game> => {
-  const gameRepository = myDataSource.getRepository(Game);
+  const gameRepository = appDataSource.getRepository(Game);
   game.status = GameStatus.Finished;
   return await gameRepository.save(game);
 }

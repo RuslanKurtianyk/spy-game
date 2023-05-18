@@ -2,9 +2,9 @@ import express, { Express, json, urlencoded } from 'express';
 const cors = require('cors');
 require('dotenv').config();
 
-import { myDataSource } from './app-data-source';
+import { appDataSource } from './app-data-source';
 
-myDataSource
+appDataSource
     .initialize()
     .then(() => {
         console.log("Data Source has been initialized!")

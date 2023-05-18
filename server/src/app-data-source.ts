@@ -3,7 +3,7 @@ import { Game } from './entity/game.entity';
 import { Location } from './entity/location.entity';
 require('dotenv').config();
 
-export const myDataSource = new DataSource({
+export const appDataSource = new DataSource({
     type: 'mysql',
     host: process.env.DB_HOST,
     port: 3306,
@@ -13,5 +13,5 @@ export const myDataSource = new DataSource({
     entities: [Game, Location],
     migrations: ['src/migrations/*.{ts}'],
     logging: true,
-    synchronize: true,
+    synchronize: false,
 });
