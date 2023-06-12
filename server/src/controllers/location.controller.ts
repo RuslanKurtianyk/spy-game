@@ -7,7 +7,7 @@ export const LocationController = {
       const locations = await getLocationsList();
       response.status(200).json({data: locations});
     } catch(error) {
-      response.status(500).send('Something went wrong');
+      response.status(500).send({error: 'Something went wrong'});
     }
   },
 };

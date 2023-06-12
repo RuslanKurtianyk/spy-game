@@ -6,24 +6,24 @@ import { GameValidationError, GameNotFoundError, NameQueryParamMissingError } fr
 
 export const GameController = {
   getOne: async (
-    request: Request<WithId, unknown, unknown, GetGameQuery>,
-    response: Response
+    request: Request<WithId, ServerResponse, unknown, GetGameQuery>,
+    response: ServerResponse
   ): Promise<void> => {
     const { name } = request.query;
     try {
       const game = await getGameById(request.params.id, name);
-      response.status(200).send(game);
+      response.status(200).send({data: game});
     } catch (error) {
       if (error instanceof GameNotFoundError) {
-        response.status(404).send(error.message);
+        response.status(404).send({error: error.message});
         return;
       }
 
       if (error instanceof NameQueryParamMissingError) {
-        response.status(400).send(error.message);
+        response.status(400).send({error: error.message});
         return;
       }
-      console.log(error);
+
       response.status(500).send('Something went wrong');
     }
   },
@@ -57,7 +57,7 @@ export const GameController = {
   },
   start: async (
     request: Request<any, string, any>,
-    response: Response
+    response: ServerResponse
   ): Promise<void> => {
     const { gameId } = request.params;
 
