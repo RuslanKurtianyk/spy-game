@@ -36,7 +36,7 @@
             "in": "body",
             "description": "Game that we want to create",
             "schema": {
-              "$ref": "#/definitions/GameDto"
+              "$ref": "#/definitions/CreateGameDto"
             }
           }
         ],
@@ -204,7 +204,7 @@
         }
       }
     },
-    "GameDto": {
+    "CreateGameDto": {
       "required": ["name"],
       "properties": {
         "name": {
@@ -227,6 +227,12 @@
         "status": {
           "type": "string",
           "enum": ["New", "InProgress", "Finished"]
+        },
+        "playersMaxCount": {
+          "type": "number"
+        },
+        "playersMinCount": {
+          "type": "number"
         }
       }
     },
