@@ -23,7 +23,7 @@ export const getGameById = async (id: string, userName?: string): Promise<Game> 
 
 export const createNewGame = async (game: Partial<Game>) => {
   const gameRepository = appDataSource.getRepository(Game);
-  const entity = gameRepository.create(game);
+  const entity = gameRepository.create({...game, admin: null});
 
   return await gameRepository.save(entity);
 }

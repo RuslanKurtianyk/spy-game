@@ -44,7 +44,7 @@
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/Games"
+              "$ref": "#/definitions/Game"
             }
           },
           "500": {
