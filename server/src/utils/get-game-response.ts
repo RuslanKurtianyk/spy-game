@@ -3,7 +3,7 @@ import { Game } from '../entity';
 import { GameDto } from '../types/dto';
 
 export const getGameResponse = (game: Game, userName: string = ''): GameDto => {
-  const gameDto: GameDto = { ...structuredClone(game)};
+  const gameDto: GameDto = { ...JSON.parse(JSON.stringify(game))};
   const userRole = gameDto.players ? gameDto.players.find(player => player.name === userName)?.role || PlayerRole.Resident : PlayerRole.Resident;
 
   if (userRole === PlayerRole.Spy) {
