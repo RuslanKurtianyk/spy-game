@@ -26,7 +26,7 @@ export const app: Express = express();
 app.set('port', process.env.PORT || 8081);
 const corsOptions = {
   origin: '*',
-  methods: ['GET', 'POST'],
+  methods: ['GET', 'POST', 'PUT'],
   allowedHeaders: ['Content-Type'],
 };
 
