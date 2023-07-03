@@ -1,9 +1,11 @@
 import express, { Express, json, urlencoded } from 'express';
+import { appDataSource } from './app-data-source';
 const path = require('path');
 const cors = require('cors');
-require('dotenv').config();
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('../swagger.json');
 
-import { appDataSource } from './app-data-source';
+require('dotenv').config();
 
 appDataSource
   .initialize()
@@ -34,9 +36,6 @@ app.use(urlencoded({ extended: true }));
 
 app.use('', routes);
 
-const swaggerUi = require('swagger-ui-express'),
-  swaggerDocument = require('../swagger.json');
-
 app.use('/api/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use(express.static(path.join(__dirname, '../client/dist')));
@@ -44,4 +43,3 @@ app.use(express.static(path.join(__dirname, '../client/dist')));
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/dist', 'index.html'));
 });
-
