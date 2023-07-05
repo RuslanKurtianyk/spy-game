@@ -1,13 +1,13 @@
-import './App.scss'
 import { RecoilRoot } from 'recoil';
 import { Main } from './components/Main';
+import { BrowserRouter } from 'react-router-dom';
 
-function App() {
-  return (
-    <RecoilRoot>
-      <Main/>
-    </RecoilRoot>
-  )
-}
+const App = () => (
+  <RecoilRoot>
+    <BrowserRouter>
+      <Main />
+    </BrowserRouter>
+  </RecoilRoot>
+);
 
-export default App
+export default App;

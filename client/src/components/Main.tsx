@@ -1,53 +1,21 @@
-import reactLogo from '../assets/react.svg'
-import viteLogo from '/vite.svg'
 import '../App.scss'
-import {
-  atom,
-  selector,
-  useRecoilState,
-  useRecoilValue,
-} from 'recoil';
-
-const state = atom({
-  key: 'state',
-  default: 0,
-});
-
-const charCountState = selector({
-  key: 'charCountState',
-  get: ({get}) => {
-    const text = get(state);
-
-    return text;
-  },
-});
+import { Route, Routes } from 'react-router-dom';
+import { NoMatch } from './NoMatch';
+import { Home } from './Home';
+import { JoinGame } from './JoinGame';
+import { CreateGame } from './CreateGame';
+import { Game } from './Game';
 
 export const Main = () => {
-  const [count, setCount] = useRecoilState(state);
-  const countValue = useRecoilValue(charCountState);
-
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {countValue}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/join" element={<JoinGame />} />
+        <Route path="/create" element={<CreateGame />} />
+        <Route path="/game" element={<Game />} />
+        <Route path="*" element={<NoMatch />} />
+      </Routes>
     </>
   )
 }
