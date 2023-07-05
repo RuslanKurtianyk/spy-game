@@ -46,7 +46,7 @@ export const GameController = {
 
     try {
       await joinGame(game, { name });
-      response.status(200).send(`You joined the game`);
+      response.status(200).send(game);
     } catch (error) {
       if (error instanceof GameValidationError) {
         response.status(400).send(error.message);
