@@ -1,54 +1,48 @@
 import spyLogo from '../assets/spy-logo.svg';
 import '../App.scss';
 import { useRecoilState } from 'recoil';
-import { useState } from 'react';
-import gameAtom from '../recoil/game/atom';
+import { currentGameIdAtom } from '../recoil/game/atom';
 import userAtom from '../recoil/user/atom';
 import { useNavigate } from 'react-router-dom';
 
 export const JoinGame = () => {
   const navigate = useNavigate();
-  const [, setGame] = useRecoilState(gameAtom);
   const [user, setUser] = useRecoilState(userAtom);
-  const [gameId, setGameId] = useState('');
+  const [currentGameId, setCurrentGameId] = useRecoilState(currentGameIdAtom);
 
   const onGameIdChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setGameId(event.target.value);
+    setCurrentGameId(event.target.value);
   };
 
   const onNickNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUser((currentUser) => ({
       ...currentUser,
-      nickName: event.target.value
+      name: event.target.value,
     }));
   };
 
   const onGameJoin = async () => {
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/games/${gameId}/join`,
+        `${import.meta.env.VITE_API_URL}/games/${currentGameId}/join`,
         {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(
-            { name: user.name }
-        )
+          body: JSON.stringify({ name: user.name }),
         }
       );
       const data = await response.json();
       console.log(data);
-      setGame(data);
       navigate('/game');
-    } catch(error) {
-      // TODO: handle errors
+    } catch (error) {
+      setCurrentGameId('');
     }
-
   };
 
   return (
     <>
       <div>
-        <a href="#" target="_blank">
+        <a href="/">
           <img src={spyLogo} className="logo react" alt="Spy logo" />
         </a>
       </div>
@@ -56,7 +50,7 @@ export const JoinGame = () => {
       <div className="card">
         <label>
           Enter Game Id:
-          <input type="text" value={gameId} onChange={onGameIdChange} />
+          <input type="text" value={currentGameId} onChange={onGameIdChange} />
         </label>
       </div>
       <div className="card">

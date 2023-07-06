@@ -1,9 +1,17 @@
 import spyLogo from '../assets/spy-logo.svg'
 import '../App.scss'
 import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useRecoilState } from 'recoil';
+import { currentGameIdAtom } from '../recoil';
 
 export const Home = () => {
   const navigate = useNavigate();
+  const [, setCurrentGameId] = useRecoilState(currentGameIdAtom);
+  
+  useEffect(() => {
+    setCurrentGameId('');
+  }, []);
 
   return (
     <>
