@@ -1,4 +1,3 @@
-import spyLogo from '../assets/spy-logo.svg';
 import '../App.scss';
 import { useForm } from 'react-hook-form';
 import { useRecoilState } from 'recoil';
@@ -6,6 +5,7 @@ import { currentGameIdAtom } from '../recoil/game/atom';
 import { useNavigate } from 'react-router-dom';
 import { GameFormData } from '../model/game-form-data.type';
 import userAtom from '../recoil/user/atom';
+import { Header } from './Header';
 
 export const CreateGame = () => {
   const navigate = useNavigate();
@@ -40,11 +40,7 @@ export const CreateGame = () => {
 
   return (
     <>
-      <div>
-        <a href="/" target="_blank">
-          <img src={spyLogo} className="logo" alt="Spy logo" />
-        </a>
-      </div>
+      <Header />
       <h1>Spy Game</h1>
       <h2>Create New Game</h2>
       <div className="card">

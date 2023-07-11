@@ -1,38 +1,34 @@
-import spyLogo from '../assets/spy-logo.svg';
 import '../App.scss';
 import { useRecoilState } from 'recoil';
 import { currentGameIdAtom } from '../recoil/game/atom';
 import userAtom from '../recoil/user/atom';
 import { useNavigate } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import { JoinGameFormData } from '../model/join-game-form-data.type';
+import { Header } from './Header';
 
 export const JoinGame = () => {
   const navigate = useNavigate();
-  const [user, setUser] = useRecoilState(userAtom);
-  const [currentGameId, setCurrentGameId] = useRecoilState(currentGameIdAtom);
+  const { register, handleSubmit } = useForm<JoinGameFormData>();
+  const [, setUser] = useRecoilState(userAtom);
+  const [, setCurrentGameId] = useRecoilState(currentGameIdAtom);
 
-  const onGameIdChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setCurrentGameId(event.target.value);
-  };
-
-  const onNickNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const onGameJoin = async (formData: JoinGameFormData) => {
+    setCurrentGameId(formData.gameId);
     setUser((currentUser) => ({
       ...currentUser,
-      name: event.target.value,
+      name: formData.name,
     }));
-  };
-
-  const onGameJoin = async () => {
     try {
-      const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/games/${currentGameId}/join`,
+      await fetch(
+        `${import.meta.env.VITE_API_URL}/games/${formData.gameId}/join`,
         {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ name: user.name }),
+          body: JSON.stringify({ name: formData.name }),
         }
       );
-      const data = await response.json();
-      console.log(data);
+
       navigate('/game');
     } catch (error) {
       setCurrentGameId('');
@@ -41,27 +37,24 @@ export const JoinGame = () => {
 
   return (
     <>
-      <div>
-        <a href="/">
-          <img src={spyLogo} className="logo react" alt="Spy logo" />
-        </a>
-      </div>
+      <Header />
       <h1>Spy Game</h1>
-      <div className="card">
-        <label>
-          Enter Game Id:
-          <input type="text" value={currentGameId} onChange={onGameIdChange} />
-        </label>
-      </div>
-      <div className="card">
-        <label>
-          Enter your nickname:
-          <input type="text" value={user?.name} onChange={onNickNameChange} />
-        </label>
-      </div>
-      <div className="card">
-        <button onClick={onGameJoin}>Join</button>
-      </div>
+      <form onSubmit={handleSubmit(onGameJoin)}>
+        <div className="card">
+          <label>
+            Enter Game Id:
+            <input type="text" {...register('gameId')} />
+          </label>
+        </div>
+        <div className="card">
+          <label>
+            Enter your nickname:
+            <input type="text" {...register('name')} />
+          </label>
+        </div>
+
+        <input type="submit" />
+      </form>
     </>
   );
 };

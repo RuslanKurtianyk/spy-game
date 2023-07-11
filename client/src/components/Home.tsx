@@ -1,9 +1,9 @@
-import spyLogo from '../assets/spy-logo.svg'
 import '../App.scss'
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useRecoilState } from 'recoil';
 import { currentGameIdAtom } from '../recoil';
+import { Header } from './Header';
 
 export const Home = () => {
   const navigate = useNavigate();
@@ -15,11 +15,7 @@ export const Home = () => {
 
   return (
     <>
-      <div>
-        <a href="#" target="_blank">
-          <img src={spyLogo} className="logo react" alt="Spy logo" />
-        </a>
-      </div>
+      <Header />
       <h1>Welcome to Spy Game</h1>
       <div className="card">
         <button onClick={() => navigate('/create')}>
