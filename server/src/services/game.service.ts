@@ -14,7 +14,7 @@ export const getGameById = async (id: string, userName?: string): Promise<Game> 
     throw new GameNotFoundError();
   }
 
-  if (game.status === GameStatus.InProgress && !userName) {
+  if (!userName) {
     throw new NameQueryParamMissingError();
   }
 

@@ -12,7 +12,7 @@ export const GameController = {
     const { name } = request.query;
     try {
       const game = await getGameById(request.params.id, name);
-      response.status(200).send({data: game});
+      response.status(200).send({...game});
     } catch (error) {
       if (error instanceof GameNotFoundError) {
         response.status(404).send({error: error.message});
@@ -20,6 +20,7 @@ export const GameController = {
       }
 
       if (error instanceof NameQueryParamMissingError) {
+        console.log('heheheheheheheheheehheheeh');
         response.status(400).send({error: error.message});
         return;
       }
@@ -37,7 +38,7 @@ export const GameController = {
   ): Promise<void> => {
     const { gameId } = request.params;
     const { name } = request.body;
-    const game = await getGameById(gameId);
+    const game = await getGameById(gameId, name);
 
     if (!game) {
       response.status(404).send(`No game found with id: ${gameId}`);
